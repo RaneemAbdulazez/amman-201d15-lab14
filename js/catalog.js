@@ -1,10 +1,9 @@
 /* global Product, Cart */
 
 'use strict';
-
+let counter=0;
 // Set up an empty cart for use on this page.
 const cart= new Cart([]);
-
 
 // On screen load, we call this method to put all of the busmall options
 // (the things in the Product.allProducts array) into the drop down list.
@@ -20,7 +19,6 @@ function populateForm() {
       option.innerHTML=Product.allProducts[i].name;
       // console.log(Product.allProducts[i].name);
        option.value = Product.allProducts[i].name;     
-
       
       option.id = Product.allProducts[i].name;
       selectElement.appendChild(option);   
@@ -33,17 +31,10 @@ function populateForm() {
 // object, save the whole thing back to local storage and update the screen
 // so that it shows the # of items in the cart and a quick preview of the cart itself.
 function handleSubmit(event) {
-
+  
+  // TODO: Prevent the page from reloading
   event.preventDefault();
 
-
-
-
-
-
-
-  
-  
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
@@ -51,51 +42,59 @@ function handleSubmit(event) {
   updateCartPreview();
   
 }
-let array=[];
-// TODO: Prevent the page from reloading
-//   let cartContents=document.getElementById('cartContents');
-//   let ul=document.createElement('ul');
-//   cartContents.appendChild(ul);
-// let li=document.createElement('li');
-// ul.appendChild(li);
-// console.log(Product.allProducts[i].quantity);
-// li.innerHTML=Product.allProducts[i].name;
-// console.log('5555555555555555555');
+
 
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
   
   // TODO: suss out the item picked from the select list
-  // for(let i=0;i<Product.allProducts.length;i++){
-  //   var x = document.getElementById(Product.allProducts[i].name).selected;
-  // if (x==true){
-  //   array.push(Product.allProducts[i].name);
-  // console.log(cart);
-  // }
-  //   }
-
-  // var selectElement = document.getElementById("items").options.item().text;
-// console.log(selectElement);
-
-   let selectElement = document.getElementById("items").value;
-   console.log('selectElement',selectElement);
-
-  //  console.log(userSelection);
+ 
+   let product = document.getElementById("items").value;
+   console.log('selectElement',product);
 
   // TODO: get the quantity
   let quantity=document.getElementById("quantity").value;
   console.log('qauntity',quantity);
   
   // TODO: using those, add one item to the Cart
+  cart.addItem(product,quantity);
+
+  
+
+
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+function updateCounter() {
+  counter++;
+let itemCount=document.getElementById('itemCount');
+
+// console.log(typeof quantity);
+
+itemCount.innerHTML=counter;
+console.log(counter);
+
+
+
+
+
+}
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
+
+  let product = document.getElementById("items").value;
+  let quantity=document.getElementById("quantity").value;
+  
+  let cartContents=document.getElementById('cartContents');
   // TODO: Add a new element to the cartContents div with that information
+  let ul=document.createElement('ul');
+  cartContents.appendChild(ul);
+  let li=document.createElement('li');
+  ul.appendChild(li);
+li.textContent=product +'     '+quantity;
+
 }
 
 // Set up the "submit" event listener on the form.
