@@ -9,3 +9,13 @@ body{
     left: 50px;
 
 }
+
+thead{
+    border:solid;
+    padding: 10px;
+}
+
+th{
+    border:solid pink;
+    padding: 10px;
+}
